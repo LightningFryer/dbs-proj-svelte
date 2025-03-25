@@ -40,7 +40,7 @@
 
 		{#if $session?.data?.user}
 			<a class="btn" href="/dashboard">Dashboard</a>
-			<a class="btn" href="/dashboard">Bookings</a>
+			<a class="btn" href="/bookings">Bookings</a>
 		{/if}
 	</div>
 </nav>
