@@ -5,12 +5,15 @@
 	import { gsap } from 'gsap';
 	import SplitType from 'split-type';
 
-	let session = null;
+	const session = authClient.useSession();
 
-	// Fetch session on mount
-	onMount(async () => {
-		session = await authClient.useSession();
-	});
+	async function signIn() {
+		await authClient.signIn.social({
+			provider: 'google',
+			callbackURL: '/',
+			errorCallbackURL: '/'
+		});
+	}
 
 	// Run GSAP animation on mount
 	onMount(() => {
@@ -25,8 +28,8 @@
 			onComplete: () => {
 				gsap.fromTo(
 					'.book-hotel-btn',
-					{ opacity: 0, yPercent: 50 },
-					{ opacity: 1, duration: 0.3, yPercent: 0 }
+					{ yPercent: 50, autoAlpha: 0 },
+					{ duration: 0.3, yPercent: 0, autoAlpha: 1 }
 				);
 			}
 		});
@@ -40,6 +43,12 @@
 		<div class="flex flex-col gap-y-2">
 			<h1 class="font-bebas text-8xl font-bold" id="main-text">Welcome to our humble Hotel!</h1>
 		</div>
-		<a href="/book_room" class="btn btn-xl opacity-0 book-hotel-btn">Book A Room Now</a>
+		{#key $session}
+			{#if $session?.data?.user}
+				<a href="/book_room" class="btn btn-xl book-hotel-btn opacity-0">Book A Room Now</a>
+			{:else}
+				<button class="btn btn-xl book-hotel-btn opacity-0" onclick={signIn}>Sign In To Book Rooms</button>
+			{/if}
+		{/key}
 	</div>
 </div>

@@ -1,6 +1,6 @@
 import { auth } from '$lib/auth';
 import { connection } from '$lib/db';
-import { json, redirect } from '@sveltejs/kit';
+import { json, redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ request }) => {
@@ -21,3 +21,21 @@ export const load = (async ({ request }) => {
 		bookingData: parsedBookingData
 	};
 }) satisfies PageServerLoad;
+
+export const actions: Actions = {
+	cancelBooking: async ({ request }) => {
+		const session = await auth.api.getSession({
+			headers: request.headers
+		});
+
+		const formData = await request.formData();
+		const roomID = formData.get('room_id') as string;
+		const userID = session?.user.id;
+
+		await connection.query(
+			`DELETE FROM bookings WHERE roomID = ${roomID} AND userID = '${userID}'`
+		);
+		await connection.query(`UPDATE ROOMS SET booked = 0 WHERE RID = ${roomID}`);
+		await connection.commit();
+	}
+};

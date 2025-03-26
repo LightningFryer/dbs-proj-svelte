@@ -1,5 +1,7 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { authClient } from '$lib/authClient';
+	import { redirect } from '@sveltejs/kit';
 	import type { Session } from 'better-auth';
 	import { onMount } from 'svelte';
 
@@ -16,7 +18,9 @@
 	}
 
 	async function signOut() {
-		await authClient.signOut();
+		await authClient.signOut().then(() => {
+			redirect(301, '/');
+		});
 	}
 </script>
 
