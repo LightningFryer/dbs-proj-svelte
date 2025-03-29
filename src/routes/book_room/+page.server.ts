@@ -11,6 +11,7 @@ export const load = (async ({ request }) => {
 	if (!session) {
 		redirect(300, '/');
 	}
+
 	const [results] = await connection.query('SELECT * FROM ROOMS WHERE BOOKED = 0');
 	return { results };
 }) satisfies PageServerLoad;
@@ -23,14 +24,20 @@ export const actions: Actions = {
 		const userID = session?.user.id as string;
 		const formData = await request.formData();
 		const roomID = formData.get('room_id') as string;
-		console.log(roomID);
+		const checkInDate = formData.get('check_in_date') as string;
+		const checkOutDate = formData.get('check_out_date') as string;
+		const guestCount = formData.get('guests') as string;
+
 		try {
 			await connection.query(`UPDATE ROOMS SET BOOKED = 1 WHERE RID = ${roomID}`);
-			await connection.query(`INSERT INTO BOOKINGS(userID, roomID) VALUES('${userID}', ${roomID})`);
+			await connection.query(
+				`INSERT INTO BOOKINGS VALUES('${userID}', ${roomID}, '${checkInDate}', '${checkOutDate}', ${guestCount})`
+			);
 			await connection.commit();
 		} catch (err) {
 			console.log(err);
 		}
+
 		redirect(301, '/book_room_success');
 	}
 };

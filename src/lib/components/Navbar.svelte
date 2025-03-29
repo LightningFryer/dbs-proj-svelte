@@ -5,8 +5,8 @@
 	import type { Session } from 'better-auth';
 	import { onMount } from 'svelte';
 
+	import { adminEmails } from '$lib/adminEmails';
 	// List of admin emails
-	let adminEmails = ['admin@example.com'];
 	const session = authClient.useSession();
 
 	async function signIn() {
@@ -18,15 +18,23 @@
 	}
 
 	async function signOut() {
-		await authClient.signOut().then(() => {
-			redirect(301, '/');
+		await authClient.signOut({
+			fetchOptions: {
+				onSuccess: () => {
+					window.location.reload();
+				}
+			}
 		});
 	}
 </script>
 
-<nav class="navbar bg-base-100 fixed z-10 shadow-md">
+<nav class="navbar fixed z-10 bg-[#213B65]/30 text-white shadow-md backdrop-blur-sm">
 	<div class="navbar-start">
-		<a href="/" class="btn btn-ghost rounded-md text-4xl">Hotel</a>
+		<a
+			href="/"
+			class="btn btn-ghost btn-xl font-jua rounded-[13px] border-transparent font-light text-[#EDEDED] shadow-none hover:bg-[#030B49]"
+			>Hotel</a
+		>
 	</div>
 
 	<div class="navbar-end space-x-2">
@@ -37,14 +45,29 @@
 		{/if}
 
 		{#if $session?.data?.user}
-			<button class="btn" on:click={signOut}>Sign out</button>
+			<button
+				class="btn font-jua rounded-[13px] border-transparent bg-[#030B49] font-light text-[#EDEDED] shadow-none"
+				on:click={signOut}>Sign out</button
+			>
 		{:else}
-			<button class="btn" on:click={signIn}>Sign in</button>
+			<button
+				class="btn font-jua rounded-[13px] border-transparent bg-[#030B49] font-light text-[#EDEDED] shadow-none"
+				on:click={signIn}>Sign in</button
+			>
 		{/if}
 
 		{#if $session?.data?.user}
-			<a class="btn" href="/dashboard">Dashboard</a>
-			<a class="btn" href="/bookings">Bookings</a>
+			<a
+				class="btn font-jua rounded-[13px] border-transparent bg-[#030B49] font-light text-[#EDEDED] shadow-none"
+				href="/bookings">Bookings</a
+			>
+		{/if}
+
+		{#if $session.data?.user && adminEmails.includes($session.data.user.email)}
+			<a
+				class="btn font-jua rounded-[13px] border-transparent bg-[#030B49] font-light text-[#EDEDED] shadow-none"
+				href="/dashboard">Dashboard</a
+			>
 		{/if}
 	</div>
 </nav>
