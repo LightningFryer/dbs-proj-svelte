@@ -10,32 +10,92 @@
 
 <Navbar />
 <main class="flex h-screen flex-col items-center justify-center">
-	<ul class="list bg-base-100 rounded-box h-[70%] w-[80%] overflow-y-auto shadow-md">
-		<li class="font-bebas p-4 pb-2 text-4xl tracking-wide border-4 rounded-md">Rooms you have booked</li>
+	<ul class="list rounded-box mt-12 h-[80%] w-[80%] overflow-y-auto bg-[#D9D9D9] p-8 shadow-md">
+		<li class="font-kanit rounded-md pb-2 text-4xl">
+			ROOMS BOOKED
+		</li>
 
 		{#if data.bookingData[0].length != 0}
 			{#each data.bookingData[0] as row}
 				<form class="" method="post" use:enhance action="?/cancelBooking">
 					<input name="room_id" class="invisible hidden w-0" value={row[0]} />
-					<li class="list-row">
-						<div class="text-4xl font-thin tabular-nums opacity-30">{row[0]}</div>
-						<div class="list-col-grow">
-							<div>{row[1]}</div>
-							<div class="text-xs font-semibold uppercase opacity-60">
-								Food Included: {row[2]}
+					<li class="list-row flex w-full flex-col">
+						<div class="card card-side min-w-full bg-[#FEFEFE]/50 shadow-sm">
+							<figure>
+								<img
+									src={`src/lib/images/room_${row[1].toLowerCase()}.jpg`}
+									alt="Movie"
+									class="max-h-64"
+								/>
+							</figure>
+							<div class="card-body">
+								<h2 class="card-title font-kanit text-3xl tracking-wider">
+									{row[1].toUpperCase()} ROOM
+								</h2>
+								<div class="divider m-0"></div>
+								{#if row[2] == 'Yes'}
+									<p class="font-kanit font-semibold tracking-wide text-[#4A4A4A]">Meal Included</p>
+								{:else}
+									<p class="font-kanit font-semibold tracking-wide text-[#4A4A4A]">
+										Meal not included
+									</p>
+								{/if}
+
+								<div class="card-actions items-center justify-between">
+									<div class="flex flex-row gap-x-4">
+										<div class="flex flex-col">
+											<p class="font-kanit tracking-wide text-[#4A4A4A]">Total price paid</p>
+											<p class="font-kanit text-2xl text-black">{row[3] * row[10]} Rs</p>
+										</div>
+
+										<div class="flex flex-col">
+											<p class="font-kanit tracking-wide text-[#4A4A4A]">Check In Date</p>
+											<p class="font-kanit text-2xl text-black">
+												{new Date(row[7]).getFullYear()}/{new Date(row[7]).getMonth() +
+													1}/{new Date(row[7]).getDate()}
+											</p>
+										</div>
+
+										<div class="flex flex-col">
+											<p class="font-kanit tracking-wide text-[#4A4A4A]">Check Out Date</p>
+											<p class="font-kanit text-2xl text-black">
+												{new Date(row[8]).getFullYear()}/{new Date(row[8]).getMonth() +
+													1}/{new Date(row[8]).getDate()}
+											</p>
+										</div>
+
+										<div class="flex flex-col">
+											<p class="font-kanit tracking-wide text-[#4A4A4A]">Days Booked</p>
+											<p class="font-kanit text-2xl text-black">{row[10]}</p>
+										</div>
+
+										<div class="flex flex-col">
+											<p class="font-kanit tracking-wide text-[#4A4A4A]">Guests</p>
+											<p class="font-kanit text-2xl text-black">{row[9]}</p>
+										</div>
+									</div>
+									<button class="btn font-kanit bg-[#6C0002] font-normal text-white"
+										>Cancel Booking</button
+									>
+								</div>
 							</div>
-						</div>
-						<div class="flex flex-row items-center justify-center gap-4">
-							<!-- <p class="font-bebas text-2xl font-bold">RS {row[3]}</p> -->
-							<button class="btn" type="submit">Cancel Booking</button>
 						</div>
 					</li>
 				</form>
 			{/each}
 		{:else}
-			<div class="flex flex-col justify-center items-center h-full w-full">
+			<div class="flex h-full w-full flex-col items-center justify-center">
 				<h1 class="font-bebas text-5xl">You don't have any bookings yet!</h1>
 			</div>
 		{/if}
 	</ul>
 </main>
+
+<style>
+	main {
+		background-image: url('src/lib/images/landing_bg.png');
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: top;
+	}
+</style>

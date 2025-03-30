@@ -31,7 +31,14 @@ export const actions: Actions = {
 		try {
 			await connection.query(`UPDATE ROOMS SET BOOKED = 1 WHERE RID = ${roomID}`);
 			await connection.query(
-				`INSERT INTO BOOKINGS VALUES('${userID}', ${roomID}, '${checkInDate}', '${checkOutDate}', ${guestCount})`
+				`INSERT INTO BOOKINGS VALUES('${userID}', ${roomID}, '${checkInDate}', '${checkOutDate}', ${guestCount}, 0)`
+			);
+			const [daysBookedSQLResult] = await connection.query(
+				`SELECT DATEDIFF(check_out, check_in) FROM BOOKINGS WHERE roomID = ${roomID}`
+			);
+			await connection.commit();
+			await connection.query(
+				`UPDATE BOOKINGS SET days_booked = ${daysBookedSQLResult[0][0]} WHERE roomID = ${roomID}`
 			);
 			await connection.commit();
 		} catch (err) {

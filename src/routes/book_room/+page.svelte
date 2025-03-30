@@ -2,6 +2,7 @@
 	import Navbar from '$lib/components/Navbar.svelte';
 	import type { PageData } from './$types';
 	import { onMount } from 'svelte';
+	import { DoorClosed, DoorOpen, User } from 'lucide-svelte';
 
 	let Pikaday;
 	let checkInPickerField: any = $state('');
@@ -108,10 +109,14 @@
 			</form>
 		{/each}
 	</ul>
+
 	<div class="flex w-[40%] flex-col">
 		<div class="flex flex-row rounded-[18px] bg-[#FEFEFE]">
 			<div class="flex flex-col p-5">
-				<h2 class="font-jua text-xl text-[#898989]">Check In</h2>
+				<div class="flex flex-row gap-x-2">
+					<DoorClosed class="text-[#898989]" />
+					<h2 class="font-jua text-xl text-[#898989]">Check In</h2>
+				</div>
 				<input
 					type="text"
 					class="input pika-single font-jua text-[#474747]"
@@ -124,7 +129,10 @@
 			</div>
 			<div class="divider lg:divider-horizontal"></div>
 			<div class="flex flex-col p-5">
-				<h2 class="font-jua text-xl text-[#898989]">Check Out</h2>
+				<div class="flex flex-row gap-x-2">
+					<DoorOpen class="text-[#898989]" />
+					<h2 class="font-jua text-xl text-[#898989]">Check Out</h2>
+				</div>
 				<input
 					type="text"
 					class="input pika-single font-jua text-[#474747]"
@@ -137,7 +145,10 @@
 			</div>
 			<div class="divider lg:divider-horizontal divider-divide-black"></div>
 			<div class="flex flex-col p-5">
-				<h2 class="font-jua text-xl text-nowrap text-[#898989]">Guests</h2>
+				<div class="flex flex-row gap-x-2 ">
+					<User class="text-[#898989]" />
+					<h2 class="font-jua text-xl text-[#898989]">Guests</h2>
+				</div>
 				<input
 					type="number"
 					class="input pika-single font-jua text-[#474747]"

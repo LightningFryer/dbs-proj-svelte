@@ -34,6 +34,7 @@
 		"better-auth": "^1.2.4",
 		"dbs-proj-svelte": "file:",
 		"gsap": "^3.12.7",
+		"lucide-svelte": "^0.485.0",
 		"mysql2": "^3.14.0",
 		"pikaday": "^1.8.2",
 		"split-type": "^0.3.4"
