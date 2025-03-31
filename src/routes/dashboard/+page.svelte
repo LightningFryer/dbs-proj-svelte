@@ -15,7 +15,8 @@
 		<div class="grid grid-cols-4 gap-x-20 gap-y-10">
 			{#each employeeData as employeeDataRow}
 				<form action="?/fireEmployee" method="post">
-					<div class="card bg-base-100 w-64 shadow-sm">
+					<input name="emp_id" value={employeeDataRow[0]} class="invisible hidden h-0 w-0" />
+					<div class="card w-72 bg-[#D9D9D9] p-4 shadow-sm">
 						<figure>
 							{#if employeeDataRow[2] == 'Chef'}
 								<img src="/src/lib/images/emp_chef.jpg" alt="emp_img" />
@@ -56,7 +57,7 @@
 								</div>
 							</div>
 							<div class="card-actions justify-end">
-								<button class="btn btn-error">FIRE</button>
+								<button class="btn btn-error" type="submit">FIRE</button>
 							</div>
 						</div>
 					</div>
