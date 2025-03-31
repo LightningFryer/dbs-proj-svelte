@@ -95,7 +95,7 @@
 
 <style>
 	main {
-		background-image: url('src/lib/images/landing_bg.png');
+		background-image: url('../../lib/images/landing_bg.png');
 		background-repeat: no-repeat;
 		background-size: cover;
 		background-position: top;

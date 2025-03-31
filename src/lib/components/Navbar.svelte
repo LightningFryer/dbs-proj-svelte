@@ -32,7 +32,7 @@
 	<div class="navbar-start">
 		<a
 			href="/"
-			class="btn btn-ghost btn-xl font-jua rounded-[13px] border-transparent font-light text-[#EDEDED] shadow-none hover:bg-[#030B49]"
+			class="btn btn-ghost btn-xl font-kanit border-transparent font-light text-[#EDEDED] shadow-none hover:bg-[#030B49]"
 			>Hotel</a
 		>
 	</div>

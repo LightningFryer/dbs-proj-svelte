@@ -6,8 +6,8 @@
 </script>
 
 <main class="flex h-screen flex-col items-center justify-center">
-	<div class="card bg-base-100 card-xl min-w-96 shadow-xl">
-		<div class="card-body">
+	<div class="card card-xl min-w-96 bg-[#D9D9D9] shadow-xl">
+		<div class="card-body gap-y-5">
 			<h2 class="card-title font-kanit font-light">BOOKING DETAILS</h2>
 			<div class="list-row flex w-full flex-col">
 				<div class="card card-side min-w-full bg-[#FEFEFE]/50 shadow-sm">
@@ -66,12 +66,22 @@
 					</div>
 				</div>
 			</div>
+
 			<div class="card-actions justify-center">
 				<a
-					class="btn font-jua rounded-[13px] border-transparent bg-[#030B49] font-light text-[#EDEDED] shadow-none"
+					class="btn btn-lg font-jua rounded-[13px] border-transparent bg-[#030B49] font-light text-[#EDEDED] shadow-none"
 					href="/bookings">Go To Bookings</a
 				>
 			</div>
 		</div>
 	</div>
 </main>
+
+<style>
+	main {
+		background-image: url('../../../lib/images/landing_bg.png');
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: top;
+	}
+</style>
