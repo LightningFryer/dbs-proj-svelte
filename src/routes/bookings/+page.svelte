@@ -8,12 +8,14 @@
 	console.log(data.bookingData[0]);
 </script>
 
+<svelte:head>
+	<title>Hotel | Your Bookings</title>
+</svelte:head>
+
 <Navbar />
 <main class="flex h-screen flex-col items-center justify-center">
 	<ul class="list rounded-box mt-12 h-[80%] w-[80%] overflow-y-auto bg-[#D9D9D9] p-8 shadow-md">
-		<li class="font-kanit rounded-md pb-2 text-4xl">
-			ROOMS BOOKED
-		</li>
+		<li class="font-kanit rounded-md pb-2 text-4xl">ROOMS BOOKED</li>
 
 		{#if data.bookingData[0].length != 0}
 			{#each data.bookingData[0] as row}

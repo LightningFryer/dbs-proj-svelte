@@ -49,6 +49,10 @@
 	console.log(data.results);
 </script>
 
+<svelte:head>
+	<title>Hotel | Book A Room</title>
+</svelte:head>
+
 <Navbar />
 <main class="flex h-screen flex-row gap-x-5 pt-24 pr-12 pl-12">
 	<ul class="list rounded-box h-[100%] w-[60%] overflow-y-auto bg-[#D9D9D9] p-8 shadow-md">
@@ -77,7 +81,7 @@
 						<figure>
 							<img
 								src={`src/lib/images/room_${row[1].toLowerCase()}.jpg`}
-								alt="Movie"
+								alt="room_img"
 								class="max-h-64"
 							/>
 						</figure>
@@ -145,7 +149,7 @@
 			</div>
 			<div class="divider lg:divider-horizontal divider-divide-black"></div>
 			<div class="flex flex-col p-5">
-				<div class="flex flex-row gap-x-2 ">
+				<div class="flex flex-row gap-x-2">
 					<User class="text-[#898989]" />
 					<h2 class="font-jua text-xl text-[#898989]">Guests</h2>
 				</div>

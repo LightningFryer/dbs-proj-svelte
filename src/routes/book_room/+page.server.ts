@@ -44,7 +44,27 @@ export const actions: Actions = {
 		} catch (err) {
 			console.log(err);
 		}
-
-		redirect(301, '/book_room_success');
+		const [bookingDataResult] = await connection.query(
+			`SELECT * FROM ROOMS, BOOKINGS WHERE ROOMS.RID = BOOKINGS.roomID AND BOOKINGS.userID = '${session?.user.id}' AND roomID = ${roomID}`
+		);
+		// console.log(bookingDataResult[0]);
+		const bookingData = bookingDataResult[0];
+		redirect(
+			301,
+			`/book_room_success/${roomID}_${bookingData[1]}_${bookingData[2]}_${bookingData[3]}_${checkInDate}_${checkOutDate}_${bookingData[10]}_${guestCount}`
+		);
 	}
 };
+// [
+// 	2,
+// 	'Double',
+// 	'No',
+// 	1340,
+// 	1,
+// 	'AdSd0NFp0yP5xLoSVf4gFx1zz4qhJlvI',
+// 	2,
+// 	2025-03-30T18:30:00.000Z,
+// 	2025-04-13T18:30:00.000Z,
+// 	1,
+// 	14
+//   ]
