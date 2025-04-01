@@ -5,7 +5,7 @@
 	import { enhance } from '$app/forms';
 
 	let { data }: { data: PageData } = $props();
-	console.log(data.bookingData[0]);
+	// console.log(data.bookingData[0]);
 </script>
 
 <svelte:head>

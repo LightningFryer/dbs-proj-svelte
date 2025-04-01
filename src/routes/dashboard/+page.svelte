@@ -16,6 +16,7 @@
 			{#each employeeData as employeeDataRow}
 				<form action="?/fireEmployee" method="post">
 					<input name="emp_id" value={employeeDataRow[0]} class="invisible hidden h-0 w-0" />
+					
 					<div class="card w-72 bg-[#D9D9D9] p-4 shadow-sm">
 						<figure>
 							{#if employeeDataRow[2] == 'Chef'}

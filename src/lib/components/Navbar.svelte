@@ -1,9 +1,5 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { authClient } from '$lib/authClient';
-	import { redirect } from '@sveltejs/kit';
-	import type { Session } from 'better-auth';
-	import { onMount } from 'svelte';
 
 	import { adminEmails } from '$lib/adminEmails';
 	// List of admin emails
@@ -21,7 +17,7 @@
 		await authClient.signOut({
 			fetchOptions: {
 				onSuccess: () => {
-					window.location.reload();
+					window.location.href = '/';
 				}
 			}
 		});
@@ -33,15 +29,15 @@
 		<a
 			href="/"
 			class="btn btn-ghost btn-xl font-kanit border-transparent font-light text-[#EDEDED] shadow-none hover:bg-[#030B49]"
-			>Hotel</a
+			>Luxe Stays</a
 		>
 	</div>
 
 	<div class="navbar-end space-x-2">
 		{#if $session?.data?.user && adminEmails.includes($session?.data.user.email)}
-			<div>*ADMIN*</div>
-		{:else}
-			<div>*NOT ADMIN*</div>
+			<div class="badge badge-primary flex flex-col">
+				<p>Welcome Admin {$session.data.user.name}</p>
+			</div>
 		{/if}
 
 		{#if $session?.data?.user}

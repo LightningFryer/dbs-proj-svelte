@@ -1,5 +1,5 @@
 import { connection } from '$lib/db';
-import { json } from '@sveltejs/kit';
+import { json, redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load = (async () => {
@@ -15,3 +15,15 @@ export const load = (async () => {
 		return {};
 	}
 }) satisfies PageServerLoad;
+
+export const actions: Actions = {
+	runQuery: async ({ request }) => {
+		const formData = await request.formData();
+		const query = formData.get('query') as string;
+
+		const [results, fields] = await connection.query(query);
+		const encodedResults = encodeURIComponent(JSON.stringify(results));
+		const encodedFields = encodeURIComponent(JSON.stringify(fields));
+		throw redirect(303, `/test?results=${encodedResults}&fields=${encodedFields}`);
+	}
+};

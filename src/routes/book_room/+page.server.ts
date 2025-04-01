@@ -23,6 +23,7 @@ export const actions: Actions = {
 		});
 		const userID = session?.user.id as string;
 		const formData = await request.formData();
+
 		const roomID = formData.get('room_id') as string;
 		const checkInDate = formData.get('check_in_date') as string;
 		const checkOutDate = formData.get('check_out_date') as string;
@@ -31,14 +32,7 @@ export const actions: Actions = {
 		try {
 			await connection.query(`UPDATE ROOMS SET BOOKED = 1 WHERE RID = ${roomID}`);
 			await connection.query(
-				`INSERT INTO BOOKINGS VALUES('${userID}', ${roomID}, '${checkInDate}', '${checkOutDate}', ${guestCount}, 0)`
-			);
-			const [daysBookedSQLResult] = await connection.query(
-				`SELECT DATEDIFF(check_out, check_in) FROM BOOKINGS WHERE roomID = ${roomID}`
-			);
-			await connection.commit();
-			await connection.query(
-				`UPDATE BOOKINGS SET days_booked = ${daysBookedSQLResult[0][0]} WHERE roomID = ${roomID}`
+				`INSERT INTO BOOKINGS VALUES('${userID}', ${roomID}, '${checkInDate}', '${checkOutDate}', ${guestCount}, DATEDIFF('${checkOutDate}', '${checkInDate}'))`
 			);
 			await connection.commit();
 		} catch (err) {
@@ -47,7 +41,7 @@ export const actions: Actions = {
 		const [bookingDataResult] = await connection.query(
 			`SELECT * FROM ROOMS, BOOKINGS WHERE ROOMS.RID = BOOKINGS.roomID AND BOOKINGS.userID = '${session?.user.id}' AND roomID = ${roomID}`
 		);
-		// console.log(bookingDataResult[0]);
+		
 		const bookingData = bookingDataResult[0];
 		redirect(
 			301,
